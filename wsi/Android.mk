@@ -92,7 +92,7 @@ LOCAL_CPPFLAGS += \
         -fstack-protector-strong \
         -Wformat -Wformat-security \
         -std=c++17 -D_GNU_SOURCE=1 -D_FILE_OFFSET_BITS=64 \
-        -Wall -Wsign-compare -Wpointer-arith \
+        -Wall -Wno-sign-compare -Wpointer-arith \
         -Wcast-qual -Wcast-align \
         -D_GNU_SOURCE=1 -D_FILE_OFFSET_BITS=64 \
         -Wno-unused-parameter \
