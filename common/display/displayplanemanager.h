@@ -88,10 +88,6 @@ class DisplayPlaneManager {
     return total_overlays_;
   }
 
-  bool HasCursorPlane() const {
-    return cursor_plane_ != NULL;
-  }
-
   // Transform to be applied to all planes associated
   // with pipe of this displayplanemanager.
   void SetDisplayTransform(uint32_t transform);

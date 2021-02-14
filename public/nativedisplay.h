@@ -465,10 +465,6 @@ class NativeDisplay {
     return 0;
   }
 
-  virtual bool HasCursorPlane() const {
-    return false;
-  }
-
  protected:
   friend class PhysicalDisplay;
   friend class GpuDevice;
