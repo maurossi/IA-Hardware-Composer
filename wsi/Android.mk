@@ -100,7 +100,7 @@ LOCAL_CPPFLAGS += \
 
 LOCAL_CPPFLAGS += -DVA_SUPPORT_COLOR_RANGE
 
-ifeq ($(strip $(BOARD_USES_VULKAN)), true)
+ifeq ($(strip $(IAHWC_USES_VULKAN)), true)
 LOCAL_SHARED_LIBRARIES += \
         libvulkan
 
