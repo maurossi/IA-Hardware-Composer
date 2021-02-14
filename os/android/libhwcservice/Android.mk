@@ -26,6 +26,7 @@ LOCAL_SRC_FILES += icontrols.cpp                \
 
 LOCAL_MODULE := libhwcservice
 LOCAL_CFLAGS += -fvisibility=default
+LOCAL_CPPFLAGS += -DDO_NOT_CHECK_MANUAL_BINDER_INTERFACES
 ifeq ($(strip $(ENABLE_HYPER_DMABUF_SHARING)), true)
 LOCAL_CFLAGS += -DENABLE_PANORAMA
 endif
@@ -49,6 +50,7 @@ LOCAL_SRC_FILES += icontrols.cpp                \
 
 LOCAL_MODULE := libhwcservice
 LOCAL_CFLAGS += -fvisibility=default
+LOCAL_CPPFLAGS += -DDO_NOT_CHECK_MANUAL_BINDER_INTERFACES
 LOCAL_SHARED_LIBRARIES :=  libbinder liblog libutils
 LOCAL_MULTILIB := both
 LOCAL_EXPORT_C_INCLUDE_DIRS += $(LOCAL_PATH)
