@@ -72,7 +72,7 @@ class RingBuffer {
 
     template <typename T>
     T *get() {
-      return (T *)ptr_;
+      return (T *)(void *)ptr_;
     }
 
     size_t offset() const {
