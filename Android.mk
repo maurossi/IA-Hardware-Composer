@@ -27,7 +27,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES := \
 ifeq ($(strip $(TARGET_GFX_INTEL)), intel)
 LOCAL_MODULE := hwcomposer.$(TARGET_GFX_INTEL)
 else
-LOCAL_MODULE := hwcomposer.$(TARGET_BOARD_PLATFORM)
+LOCAL_MODULE := hwcomposer.intel
 endif
 
 LOCAL_MODULE_TAGS := optional
