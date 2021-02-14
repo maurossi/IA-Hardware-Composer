@@ -114,9 +114,9 @@ void VblankEventHandler::HandlePageFlipEvent(unsigned int sec,
     if ((abs(vperiod - vperiod_) > VBLANK_THRESHHOLD) &&
         previous_timestamp_ != -1 && NULL != callback_2_4_) {
       ITRACE(
-          "Invoking 2.4 new Vsync API, because vsnc blank is changed from %ld "
-          "to %ld",
-          vperiod_, vperiod);
+          "Invoking 2.4 new Vsync API, because vsnc blank is changed from %lu "
+          "to %lu",
+          (unsigned long)vperiod_, (unsigned long)vperiod);
       callback_2_4_->Callback(display_, timestamp, vperiod);
     } else
       callback_->Callback(display_, timestamp);
