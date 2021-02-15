@@ -85,7 +85,7 @@ bool VKProgram::Init(unsigned layer_index) {
   VkShaderModuleCreateInfo module_create = {};
   module_create.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
   module_create.codeSize = sizeof(vkcomp_vert_spv);
-  module_create.pCode = (const uint32_t *)vkcomp_vert_spv;
+  module_create.pCode = (const uint32_t *)(void *)vkcomp_vert_spv;
 
   res = vkCreateShaderModule(dev_, &module_create, NULL, &vertex_module_);
   if (res != VK_SUCCESS) {
@@ -94,7 +94,7 @@ bool VKProgram::Init(unsigned layer_index) {
   }
 
   module_create.codeSize = sizeof(vkcomp_frag_spv);
-  module_create.pCode = (const uint32_t *)vkcomp_frag_spv;
+  module_create.pCode = (const uint32_t *)(void *)vkcomp_frag_spv;
 
   res = vkCreateShaderModule(dev_, &module_create, NULL, &fragment_module_);
   if (res != VK_SUCCESS) {
