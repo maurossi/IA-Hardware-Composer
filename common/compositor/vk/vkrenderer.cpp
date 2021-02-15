@@ -71,7 +71,7 @@ VkBuffer VKRenderer::UploadBuffer(size_t data_size, const uint8_t *data,
   res = vkCreateBuffer(dev_, &buffer_create, NULL, &src_buffer);
   if (res != VK_SUCCESS) {
     ETRACE("vkCreateBuffer failed (%d)\n", res);
-    return NULL;
+    return (VkBuffer)NULL;
   }
 
   VkMemoryRequirements mem_requirements;
@@ -83,20 +83,20 @@ VkBuffer VKRenderer::UploadBuffer(size_t data_size, const uint8_t *data,
       mem_requirements.memoryTypeBits, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
   if (mem_allocate.memoryTypeIndex >= 32) {
     ETRACE("Failed to find suitable staging device memory\n");
-    return NULL;
+    return (VkBuffer)NULL;
   }
 
   VkDeviceMemory host_mem;
   res = vkAllocateMemory(dev_, &mem_allocate, NULL, &host_mem);
   if (res != VK_SUCCESS) {
     ETRACE("vkAllocateMemory failed (%d)\n", res);
-    return NULL;
+    return (VkBuffer)NULL;
   }
 
   res = vkBindBufferMemory(dev_, src_buffer, host_mem, 0);
   if (res != VK_SUCCESS) {
     ETRACE("vkBindBufferMemory failed (%d)\n", res);
-    return NULL;
+    return (VkBuffer)NULL;
   }
 
   uint8_t *src_ptr;
@@ -104,7 +104,7 @@ VkBuffer VKRenderer::UploadBuffer(size_t data_size, const uint8_t *data,
                     (void **)&src_ptr);
   if (res != VK_SUCCESS) {
     ETRACE("vkMapMemory failed (%d)\n", res);
-    return NULL;
+    return (VkBuffer)NULL;
   }
 
   memcpy(src_ptr, data, data_size);
@@ -116,7 +116,7 @@ VkBuffer VKRenderer::UploadBuffer(size_t data_size, const uint8_t *data,
   res = vkCreateBuffer(dev_, &buffer_create, NULL, &dst_buffer);
   if (res != VK_SUCCESS) {
     ETRACE("vkCreateBuffer failed (%d)\n", res);
-    return NULL;
+    return (VkBuffer)NULL;
   }
   vkGetBufferMemoryRequirements(dev_, dst_buffer, &mem_requirements);
   mem_allocate.allocationSize = mem_requirements.size;
@@ -124,19 +124,19 @@ VkBuffer VKRenderer::UploadBuffer(size_t data_size, const uint8_t *data,
       mem_requirements.memoryTypeBits, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
   if (mem_allocate.memoryTypeIndex >= 32) {
     ETRACE("Failed to find suitable buffer device memory");
-    return NULL;
+    return (VkBuffer)NULL;
   }
 
   VkDeviceMemory device_mem;
   res = vkAllocateMemory(dev_, &mem_allocate, NULL, &device_mem);
   if (res != VK_SUCCESS) {
     ETRACE("vkAllocateMemory failed (%d)\n", res);
-    return NULL;
+    return (VkBuffer)NULL;
   }
   res = vkBindBufferMemory(dev_, dst_buffer, device_mem, 0);
   if (res != VK_SUCCESS) {
     ETRACE("vkBindBufferMemory failed (%d)\n", res);
-    return NULL;
+    return (VkBuffer)NULL;
   }
 
   VkCommandBuffer cmd_buffer;
@@ -149,7 +149,7 @@ VkBuffer VKRenderer::UploadBuffer(size_t data_size, const uint8_t *data,
   res = vkAllocateCommandBuffers(dev_, &cmd_buffer_allocate, &cmd_buffer);
   if (res != VK_SUCCESS) {
     ETRACE("vkAllocateCommandBuffers failed (%d)\n", res);
-    return NULL;
+    return (VkBuffer)NULL;
   }
 
   VkCommandBufferBeginInfo begin_info = {};
@@ -159,7 +159,7 @@ VkBuffer VKRenderer::UploadBuffer(size_t data_size, const uint8_t *data,
   res = vkBeginCommandBuffer(cmd_buffer, &begin_info);
   if (res != VK_SUCCESS) {
     ETRACE("vkBeginCommandBuffer failed (%d)\n", res);
-    return NULL;
+    return (VkBuffer)NULL;
   }
 
   VkBufferCopy buffer_copy = {};
@@ -170,7 +170,7 @@ VkBuffer VKRenderer::UploadBuffer(size_t data_size, const uint8_t *data,
   res = vkEndCommandBuffer(cmd_buffer);
   if (res != VK_SUCCESS) {
     ETRACE("vkEndCommandBuffer failed (%d)\n", res);
-    return NULL;
+    return (VkBuffer)NULL;
   }
 
   VkSubmitInfo submit = {};
@@ -181,13 +181,13 @@ VkBuffer VKRenderer::UploadBuffer(size_t data_size, const uint8_t *data,
   res = vkQueueSubmit(queue_, 1, &submit, VK_NULL_HANDLE);
   if (res != VK_SUCCESS) {
     ETRACE("%d: vkQueueSubmit failed (%d)\n", __LINE__, res);
-    return NULL;
+    return (VkBuffer)NULL;
   }
 
   res = vkQueueWaitIdle(queue_);
   if (res != VK_SUCCESS) {
     ETRACE("vkQueueWaitIdle failed (%d)\n", res);
-    return NULL;
+    return (VkBuffer)NULL;
   }
 
   vkFreeCommandBuffers(dev_, cmd_pool_, 1, &cmd_buffer);
@@ -320,7 +320,7 @@ bool VKRenderer::Init() {
 
   vert_buffer_ = UploadBuffer(sizeof(verts), (const uint8_t *)verts,
                               VK_BUFFER_USAGE_VERTEX_BUFFER_BIT);
-  if (vert_buffer_ == NULL) {
+  if (vert_buffer_ == (VkBuffer)NULL) {
     ETRACE("UploadBuffer failed\n");
     return false;
   }
