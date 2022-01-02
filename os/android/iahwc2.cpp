@@ -708,7 +708,7 @@ HWC2::Error IAHWC2::HwcDisplay::PresentDisplay(int32_t *retire_fence) {
   bool use_cursor_layer = false;
   bool use_overlay_compose = false;
   bool has_cursor_plane =
-      display_->HasCursorPlane() && (!(GpuDevice::getInstance().IsGvtActive()));
+      display_->HasCursorPlane();
   uint32_t cursor_z_order = 0;
   IAHWC2::Hwc2Layer *cursor_layer;
   *retire_fence = -1;
@@ -1017,7 +1017,7 @@ HWC2::Error IAHWC2::HwcDisplay::ValidateDisplay(uint32_t *num_types,
   int Display_Composite_layers;
   int avail_planes = display_->GetTotalOverlays();
   bool has_cursor_plane =
-      display_->HasCursorPlane() && (!(GpuDevice::getInstance().IsGvtActive()));
+      display_->HasCursorPlane();
   bool include_video_layer = false;
   bool force_all_device_type = false;
 
